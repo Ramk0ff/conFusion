@@ -109,7 +109,7 @@ angular.module('confusionApp', [])
 
     //Step 5: reset your JavaScript object that holds your comment
 
-  }
+  };
 }])
 
 .controller('ContactController', ['$scope', function ($scope) {
