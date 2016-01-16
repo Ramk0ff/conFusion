@@ -12,3 +12,6 @@ Thumbs.db
 
 # webstorm project files
 .idea
+
+#distribution folder
+dist
