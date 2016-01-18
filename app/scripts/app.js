@@ -103,7 +103,7 @@ angular.module('confusionApp', [])
       rating: $scope.newComment.rating || 5,
       comment: $scope.newComment.comment,
       author: $scope.newComment.author
-    }
+    };
 
     //Step 2: This is how you record the date
     $scope.newComment.date = new Date().toISOString();
@@ -119,7 +119,7 @@ angular.module('confusionApp', [])
       rating: "",
       comment: "",
       author: ""
-    }
+    };
     console.log($scope.newComment);
   };
 }])
