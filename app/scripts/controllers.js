@@ -97,4 +97,12 @@ angular.module('confusionApp')
       console.log($scope.feedback);
     }
   };
+}])
+
+.controller('IndexController', ['$scope', 'menuFactory', function ($scope, menuFactory) {
+
+}])
+
+.controller('AboutController', ['$scope', 'corporateFactory', function ($scope, corporateFactory) {
+
 }]);
