@@ -7,16 +7,15 @@ angular.module('confusionApp')
   $scope.showDetails = false;
   $scope.showMenu = false;
   $scope.message = 'Loading ...';
-  $scope.dishes = [];
-  menuFactory.getDishes()
-  .then(
+  $scope.dishes = menuFactory.getDishes().query(
     function(response) {
-      $scope.dishes = response.data;
+      $scope.dishes = response;
       $scope.showMenu = true;
     },
     function(response) {
       $scope.message = 'Error: ' + response.status + ' ' + response.statusText;
-    });
+    }
+  );
 
   $scope.select = function(setTab) {
     $scope.tab = setTab;
@@ -43,19 +42,20 @@ angular.module('confusionApp')
   $scope.dish = {};
   $scope.showDish = false;
   $scope.message = 'Loading ...';
-  menuFactory.getDish(parseInt($stateParams.id, 10))
-  .then(
+  $scope.dish = menuFactory.getDishes().get({id:parseInt($stateParams.id,10)})
+  .$promise.then(
     function(response) {
-      $scope.dish = response.data;
+      $scope.dish = response;
       $scope.showDish = true;
     },
     function(response) {
       $scope.message = 'Error: ' + response.status + ' ' + response.statusText;
-    });
+    }
+  );
 
 }])
 
-.controller('DishCommentController', ['$scope', function($scope) {
+.controller('DishCommentController', ['$scope', 'menuFactory', function($scope, menuFactory) {
 
   //Step 1: Create a JavaScript object to hold the comment from the form
   $scope.submitComment = function () {
@@ -69,6 +69,7 @@ angular.module('confusionApp')
     $scope.newComment.date = new Date().toISOString();
     // Step 3: Push your comment into the dish's comment array
     $scope.dish.comments.push($scope.newComment);
+    menuFactory.getDishes().update({id: $scope.dish.id}, $scope.dish);
 
     //Step 4: reset your form to pristine
     $scope.commentForm.$setPristine();
@@ -123,17 +124,18 @@ angular.module('confusionApp')
 
 .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function ($scope, menuFactory, corporateFactory) {
   $scope.dish = {};
-  $scope.showDish = false;
+  $scope.showDish = true;
   $scope.message = 'Loading ...';
-  menuFactory.getDish(parseInt(0))
-  .then(
+  $scope.dish = menuFactory.getDishes().get({id:0})
+  .$promise.then(
     function(response) {
-      $scope.dish = response.data;
+      $scope.dish = response;
       $scope.showDish = true;
     },
     function(response) {
-      $scope.message = 'Error: ' + response.status + ' ' + response.statusText;
-    });
+      $scope.message = "Error: " + response.status + " " + response.statusText;
+    }
+  );
 
   $scope.promotion = menuFactory.getPromotion(0);
   $scope.leader = corporateFactory.getLeader(3);
