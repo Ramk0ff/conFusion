@@ -57,7 +57,6 @@ angular.module('confusionApp')
 
 .controller('DishCommentController', ['$scope', 'menuFactory', function($scope, menuFactory) {
 
-  //Step 1: Create a JavaScript object to hold the comment from the form
   $scope.submitComment = function () {
     $scope.newComment = {
       rating: $scope.newComment.rating || 5,
@@ -65,17 +64,14 @@ angular.module('confusionApp')
       author: $scope.newComment.author
     };
 
-    //Step 2: This is how you record the date
     $scope.newComment.date = new Date().toISOString();
     // Step 3: Push your comment into the dish's comment array
     $scope.dish.comments.push($scope.newComment);
     menuFactory.getDishes().update({id: $scope.dish.id}, $scope.dish);
 
-    //Step 4: reset your form to pristine
     $scope.commentForm.$setPristine();
     console.log($scope.dish.comments);
 
-    //Step 5: reset your JavaScript object that holds your comment
     $scope.newComment = {
       rating: "",
       comment: "",
@@ -106,6 +102,7 @@ angular.module('confusionApp')
       console.log('incorrect');
     }
     else {
+      feedbackFactory.getFeedbacks().save({id: $scope.feedback.id}, $scope.feedback);
       $scope.invalidChannelSelection = false;
       $scope.feedback = {
         mychannel:"",

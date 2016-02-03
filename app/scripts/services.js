@@ -23,7 +23,7 @@ angular.module('confusionApp')
 .factory('feedbackFactory', ['$resource', 'baseURL', function($resource, baseURL) {
   var feedfac = {};
   feedfac.getFeedbacks = function() {
-    return $resource(baseURL + 'feedback/:id', null, {'update': {method: 'PUT'}});
+    return $resource(baseURL + 'feedback/:id', null);
   };
   return feedfac;
 }]);
