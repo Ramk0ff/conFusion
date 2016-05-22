@@ -1,4 +1,6 @@
 'use strict';
+var Dish = require('./pages/dish.js');
+var dish = new Dish();
 
 describe('conFusion App E2E Testing', function() {
 
@@ -19,23 +21,21 @@ describe('conFusion App E2E Testing', function() {
 
   describe('menu 0 item', function() {
     beforeEach(function() {
-      browser.get('index.html#/menu/0');
+      dish.get();
     });
 
     it('should have a name', function() {
-      var name = element(by.binding('dish.name'));
-      expect(name.getText()).toEqual('Uthapizza Hot $4.99');
+      expect(dish.getName()).toEqual('Uthapizza Hot $4.99');
     });
 
     it('should show the number of comments as', function() {
-      expect(element.all(by.repeater('comment in dish.comments')).count()).toEqual(5);
+      expect(dish.getCommentsCount()).toEqual(5);
     });
 
     it('should show the first comment author as', function() {
-      element(by.model('orderText')).sendKeys('author');
-      expect(element.all(by.repeater('comment in dish.comments')).count()).toEqual(5);
-      var author = element.all(by.repeater('comment in dish.comments')).first().element(by.binding('comment.author'));
-      expect(author.getText()).toContain('25 Cent');
+      dish.sortCommentsBy('author');
+      expect(dish.getCommentsCount()).toEqual(5);
+      expect(dish.getAuthor()).toContain('25 Cent');
     });
  });
 });
